@@ -46,7 +46,7 @@ public class DriveCommand extends CommandBase {
     if (RobotContainer.calculateDeadband(driveController.getRawAxis(2)) != 0) {
       rotation = RobotContainer.calculateDeadband(driveController.getRawAxis(2)) * 10;
       swerve.drive(ySpeed, xSpeed, rotation, Rotation2d.fromDegrees(swerve.getAngleDegrees()));
-    } else {
+    } else if(swerve.checkAllMudlesSpeed()){
       rotation = swerve.calculateChassisPID();
       swerve.drive(ySpeed, xSpeed, rotation, swerve.getDesiredAngle());
     }

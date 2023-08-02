@@ -101,6 +101,15 @@ public class Drivebase extends SubsystemBase {
     // CommandScheduler.getInstance().registerSubsystem(this);
   }
 
+  public boolean checkAllMudlesSpeed(){
+    for(wheels wheels : wheels.values()){
+      if(!swerveModules[wheels.ordinal()].isDriveMotorAtRequstedSpeed()){
+        return false;
+      }
+    }
+    return true;
+  }
+
   /**
    * Returns the current pose of the robot in meters.
    * @return The current pose of the robot in meters.

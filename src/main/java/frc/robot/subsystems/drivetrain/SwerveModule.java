@@ -72,6 +72,10 @@ public class SwerveModule {
         / SwerveModuleConstants.driveRatio;
   }
 
+  public boolean isDriveMotorAtRequstedSpeed(){
+    return Math.abs(currentState.speedMetersPerSecond - targetState.speedMetersPerSecond) < 0.1;
+  }
+
   /**
    * Configures a CANSparkMax with the given gains and inversion.
    * @param id The ID of the CANSparkMax.
