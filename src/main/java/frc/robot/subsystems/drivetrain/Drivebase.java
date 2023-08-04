@@ -110,6 +110,10 @@ public class Drivebase extends SubsystemBase {
     return true;
   }
 
+  public void resetAimedRotationToCurrentRotation(){
+    m_desiredAngle = Rotation2d.fromDegrees(NavX.getAngle());
+  }
+
   /**
    * Returns the current pose of the robot in meters.
    * @return The current pose of the robot in meters.

@@ -13,6 +13,7 @@ public class DriveCommand extends CommandBase {
   private double xSpeed;
   private double ySpeed;
   private double rotation;
+  private boolean correctedOnce;
   CommandPS5Controller driveController;
   public DriveCommand() {
     swerve = Drivebase.getInstance();
@@ -25,6 +26,7 @@ public class DriveCommand extends CommandBase {
     rotation = 0;
     xSpeed = 0;
     ySpeed = 0;
+    correctedOnce = false;
   }
 
   // public void execute() {
@@ -46,7 +48,12 @@ public class DriveCommand extends CommandBase {
     if (RobotContainer.calculateDeadband(driveController.getRawAxis(2)) != 0) {
       rotation = RobotContainer.calculateDeadband(driveController.getRawAxis(2)) * 10;
       swerve.drive(ySpeed, xSpeed, rotation, Rotation2d.fromDegrees(swerve.getAngleDegrees()));
-    } else if(swerve.checkAllMudlesSpeed()){
+      correctedOnce = true;
+    } else{
+      if (correctedOnce){
+        swerve.resetAimedRotationToCurrentRotation();
+        correctedOnce = false;
+      }
       rotation = swerve.calculateChassisPID();
       swerve.drive(ySpeed, xSpeed, rotation, swerve.getDesiredAngle());
     }
